@@ -11,11 +11,10 @@ descriptor_names = [descriptor_name[0] for descriptor_name in Descriptors._descL
 descriptor_calculation = MoleculeDescriptors.MolecularDescriptorCalculator(descriptor_names)
 
 ## Two files -> X,y
-def makedata_cls(file1, file2, variable1, variable2, target, fptype, datasize):
+def makedata_cls(file1, file2, variable1, variable2, target, fptype):
     df1 = pd.read_csv(file1, index_col=0)
     df1[target] = 1
     df2 = pd.read_csv(file2, index_col=0)
-    df2 = df2.sample(datasize)
     df2[target] = 0
 
     if fptype == "Mordred":
@@ -112,7 +111,7 @@ def Mol2Vec(smiles, fptype="ECFP", radius=2, bits = 1024):
         vector = ReducedGraphs.GetErGFingerprint(mol)
     elif fptype == "Estate":
         vector = Fingerprinter.FingerprintMol(mol)[0]
-    elif fptype == "RDKitDesc":
+    elif fptype == "RDKit":
         vector = list(descriptor_calculation.CalcDescriptors(mol))
         for index, value in enumerate(vector):
             if index == 40: # IPC descriptor 
