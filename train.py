@@ -56,14 +56,14 @@ def train(X, y, fptype, epochs=10, batch_size=64):
     return mae_test, best_params
 
 
-def simple_model(X, y, ml, number=5):
+def simple_model(X, y, ml, folder, save_name, number=5):
     df_fi = pd.DataFrame(index=X.columns)
     kf = KFold(n_splits=5, shuffle=True)
-    results=[]
-    corrs=[]
-    count=0
+    results = []
+    corrs = []
     
     for i in range(number):
+        count = 0
         for train_idx, test_idx in kf.split(X, y):
             train_l = train_idx.tolist()
             test_l = test_idx.tolist()
@@ -76,16 +76,16 @@ def simple_model(X, y, ml, number=5):
             results.append(mean_absolute_error(y[test_l], y_pred))
             
             df_all = pd.concat([pd.DataFrame(y[test_l]), pd.DataFrame(y_pred)], axis=1)
-#             print(df_all)
             corr = df_all.corr().iloc[0,1]
             corrs.append(corr)
 
             if ml == 'rf':
                 fi = pd.DataFrame(model.feature_importances_, index=X.columns)
                 df_fi = pd.concat([df_fi, fi], axis=1)
+            pickle.dump(model, open(f'{folder}{save_name}-{i}-cv{count}.pkl', 'wb'))
+            count += 1
     
     return results, df_fi, corrs
-
 
 
 class Objective:
@@ -99,8 +99,8 @@ class Objective:
         # Search space
         model_params = {
             'in_dim': self.X.shape[1],
-            'n_layers': trial.suggest_int("n_layers", 1, 10),  ## ("n_layers", 1, 10)
-            'n_dim': trial.suggest_categorical("n_dim",[50,100,200,300,400,500,750,1000])  ## ("n_dim",[50,100,200,300,400,500,750,1000])
+            'n_layers': trial.suggest_int('n_layers', 1, 10),
+            'n_dim': trial.suggest_categorical('n_dim', [50, 100, 200, 300, 400, 500, 750, 1000])
             }
         # Train-Val split
         model = DNN(**model_params)
@@ -190,32 +190,32 @@ def metrics(y1, y2):
 
 
 def PU(model,X,y,fptype):
-    kf = KFold(n_splits=5, shuffle=True)
-    results=[]
-    count=0
+    kf = KFold(n_splits=10, shuffle=True, random_state=2)
+    results = []
+    count = 1
     model_name = model
     for train_idx, test_idx in kf.split(X, y):
-        if model == "RF":
+        if model == 'RF':
             model = RandomForestClassifier()
-        elif model == "RF-PU":
+        elif model == 'RF-PU':
             # model = ElkanotoPuClassifier(estimator=RandomForestClassifier())
             model = WeightedElkanotoPuClassifier(estimator=RandomForestClassifier(), labeled=1, unlabeled=0)
-        elif model == "SVC":
+        elif model == 'SVC':
             model = SVC(probability=True)#(C=1, kernel='rbf', gamma=0.2, probability=True)
-        elif model == "SVC-PU":
+        elif model == 'SVC-PU':
             # model = ElkanotoPuClassifier(estimator=SVC(probability=True))
             model = WeightedElkanotoPuClassifier(estimator=SVC(probability=True), labeled=1, unlabeled=0)
-        elif model == "NN":
-            model = MLPClassifier(hidden_layer_sizes=(50,),max_iter=500)
-        elif model == "NN-PU":
+        elif model == 'NN':
+            model = MLPClassifier(hidden_layer_sizes=(50,),max_iter=1000)
+        elif model == 'NN-PU':
             # model = ElkanotoPuClassifier(estimator=MLPClassifier(hidden_layer_sizes=(50,)))
-            model = WeightedElkanotoPuClassifier(estimator=MLPClassifier(hidden_layer_sizes=(50,), max_iter=500), labeled=1, unlabeled=0)
-        elif model == "GBDT":
+            model = WeightedElkanotoPuClassifier(estimator=MLPClassifier(hidden_layer_sizes=(50,), max_iter=1000), labeled=1, unlabeled=0)
+        elif model == 'GBDT':
             model = GradientBoostingClassifier()
-        elif model == "GBDT-PU":
+        elif model == 'GBDT-PU':
             # model = ElkanotoPuClassifier(estimator=GradientBoostingClassifier())
             model = WeightedElkanotoPuClassifier(estimator=GradientBoostingClassifier(), labeled=1, unlabeled=0)
-        #try:
+
         model.fit(X[train_idx], y[train_idx])
         y_pred = model.predict(X[test_idx])
         y_pred[y_pred==-1] = 0
@@ -226,9 +226,7 @@ def PU(model,X,y,fptype):
         os.makedirs(folder, exist_ok=True)
         save_name = f'{fptype}_{model_name}_{count}.pkl'
         pickle.dump(model, open(folder+save_name, 'wb'))
-        #except:
-           # continue
-        count+=1
+        count += 1
     
     results = np.array(results)
     acc_ave = np.mean(results[:,0])
@@ -239,7 +237,6 @@ def PU(model,X,y,fptype):
     rec_std = np.std(results[:,2])
     f1_ave = np.mean(results[:,3])
     f1_std = np.std(results[:,3])
-    print(f'{model_name} done')
     
     return [model_name, acc_ave, acc_std, pre_ave, pre_std, rec_ave, rec_std, f1_ave, f1_std]
 
