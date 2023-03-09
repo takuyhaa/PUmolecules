@@ -53,4 +53,4 @@ To run:
 `python main.py`
 
 By this code, `main.py` reads the argument of `setting.py` and start the calculation of molecular descriptors and training models.  
-Please note that PU learning requires Cambridge Structural Database (CSD) license (https://www.ccdc.cam.ac.uk/solutions/csd-licence/). 
+Please note that the preparation of unlabeled dataset for PU learning requires Cambridge Structural Database (CSD) license (https://www.ccdc.cam.ac.uk/solutions/csd-licence/). 
