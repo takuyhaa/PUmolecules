@@ -1,0 +1,11 @@
+﻿SMILES,T_endo (K),T_exo (K),Reversibility,CSD code,reference,,
+CC(C)c1ccc2c(c1)sc1c3ccc(C(C)C)cc3sc21,342.9,NaN,irreversible,KUDDUK02,10.1021/acs.cgd.9b01372,,
+Cc1[nH+]c(C)c(C)[nH+]c1C.O=[N+]([O-])c1cc([N+](=O)[O-])c([O-])c([N+](=O)[O-])c1,163.5,153.1,reversible,QURNEX,10.1016/j.molstruc.2020.129432,,
+CC(C)(C)c1cc(C=NCc2ccc(CN=Cc3cc(C(C)(C)C)cc(C(C)(C)C)c3O)cc2)c(O)c(C(C)(C)C)c1,450,NaN,irreversible,OCAPAK,Our experiment,,
+OC1C[NH+]2CCC1CC2.[Br-],328,312,reversible,ABIQOU,10.1038/ncomms13635,,
+OC1C[NH+]2CCC1CC2.[Cl-],340,324,reversible,XILVUK,10.1038/ncomms13635,,
+CCCN(CCC)S(=O)(=O)c1ccc(C(=O)O)cc1,317.99,316.46,reversible,QQQBSS02,10.1002/jps.24449,,
+CCCN(CCC)S(=O)(=O)c1ccc(C(=O)O)cc1,244.54,229.11,reversible,QQQBSS02,10.1002/jps.24449,,
+C1N2CN3CN1CN(C2)C3.CC1(C)C2CCC(O)(C(=O)O)C1C2,235.08,231.83,reversible,REPKAB01,10.1016/j.chemphys.2018.01.014,,
+CCCCCCCCCCCCCCN1C(=O)C2=C(c3ccc(Cl)cc3)N(CCCCCCCCCCCCCC)C(=O)C2=C1c1ccc(Cl)cc1,NaN,308,irreversible,LAHCIJ01,10.1039/C7TC01453H,,melt-crystal
+CCCCOc1ccc(C#Cc2c(C#Cc3ccc(OCCCC)cc3)c3cc(C(C)(C)C)cc4c(C#Cc5ccc(OCCCC)cc5)c(C#Cc5ccc(OCCCC)cc5)c5cc(C(C)(C)C)cc2c5c34)cc1,385,NaN,irreversible,DIXVOY,10.1039/C9NJ00652D,,
