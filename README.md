@@ -15,6 +15,7 @@ Minimum packages we used are following.
 - optuna == 3.1.0
 - pulearn == 0.0.7
 - scikit-learn == 1.0.2
+- scipy == 1.7.3
 
 ## Dataset
 PositiveDataset_public_YYMMDD.xlsx contains the information of solid-solid phase transition we manually collected as of the date.  
