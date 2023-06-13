@@ -1,6 +1,21 @@
 # PUmolecules
 ![Abstract_2-01](https://user-images.githubusercontent.com/86113952/223691202-abf489aa-d220-45a0-a2a2-61ed3fca5979.png)
 
+## Dependencies
+We implemented the codes on Python 3.7 in a computer of Windows 10.  
+Minimum packages we used are following.
+- csd-python-api == 3.0.14  
+- tensorflow == 2.9.0  
+- mordred == 1.2.0
+- numpy=1.21.6
+- pandas == 1.2.5
+- rdkit == 2022.03.2
+- shap == 0.41.0
+- matplotlib == 3.5.2
+- optuna == 3.1.0
+- pulearn == 0.0.7
+- scikit-learn == 1.0.2
+
 ## Dataset
 PositiveDataset_public_YYMMDD.xlsx contains the information of solid-solid phase transition we manually collected as of the date.  
 Each variable means following.  
@@ -43,9 +58,9 @@ The types and meanings of the arguments of `settings.py` correspond to the follo
 `./PU_results/`: Folder where classification results are stored in "PU_learning" mode  
 `./PU_preds/`: Folder where prediction results are storesd in "PU_predict" mode  
 `./Regression_results/`: Folder where regression results are stored in "Regression" mode    
-`./TL_models/`: Folder where fune-tuned models are stored in "Transfer" mode 
+`./TL_models/`: Folder where fune-tuned models are stored in "Transfer" mode  
 `./TL_results/`: Folder where regression results in "Transfer" mode  
-`./Scratch_models/`: Folder where scratch models are stored in "Scratch" mode  
+`./Scratch_models/`: Folder where scratch models are stored in "Scratch" mode. Our pre-trained models are also supplied.  
 `./Scratch_results/`: Folder where regression results are stored in "Scratch" mode
 
 ## Examples
